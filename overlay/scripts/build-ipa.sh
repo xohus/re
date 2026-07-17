@@ -36,7 +36,7 @@ fi
 
 # Xcode 26 exposes this delegate requirement on iOS 14, while Runestone 0.5.1
 # incorrectly limits its implementation to iOS 16. The app itself targets iOS 16.
-perl -0pi -e 's/\n    \@available\(iOS 16, \*\)\n    func findInteraction/\n    func findInteraction/' "$RUNESTONE_HELPER"
+perl -0pi -e 's/extension UITextSearchingHelper: UIFindInteractionDelegate \{\n    \@available\(iOS 16, \*\)/\@available(iOS 16, *)\nextension UITextSearchingHelper: UIFindInteractionDelegate {/' "$RUNESTONE_HELPER"
 
 xcodebuild \
   -project "$ROOT/Code.xcodeproj" \
