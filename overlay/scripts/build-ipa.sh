@@ -23,6 +23,22 @@ rm -rf "$BUILD_ROOT" "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR"
 
 xcodebuild \
+  -resolvePackageDependencies \
+  -project "$ROOT/Code.xcodeproj" \
+  -scheme "Code App" \
+  -derivedDataPath "$DERIVED_DATA"
+
+RUNESTONE_HELPER="$DERIVED_DATA/SourcePackages/checkouts/Runestone/Sources/Runestone/TextView/SearchAndReplace/UITextSearchingHelper.swift"
+if [ ! -f "$RUNESTONE_HELPER" ]; then
+  echo "Runestone compatibility source was not found."
+  exit 1
+fi
+
+# Xcode 26 exposes this delegate requirement on iOS 14, while Runestone 0.5.1
+# incorrectly limits its implementation to iOS 16. The app itself targets iOS 16.
+perl -0pi -e 's/\n    \@available\(iOS 16, \*\)\n    func findInteraction/\n    func findInteraction/' "$RUNESTONE_HELPER"
+
+xcodebuild \
   -project "$ROOT/Code.xcodeproj" \
   -scheme "Code App" \
   -configuration Release \
