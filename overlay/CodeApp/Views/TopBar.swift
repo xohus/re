@@ -434,11 +434,11 @@ private struct ClarityCodexSetupView: View {
             }
             .navigationTitle("Codex on iPad")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
                 }
-            }
+            })
         }
     }
 }
@@ -597,7 +597,7 @@ private struct ClarityOutlineView: View {
             }
             .searchable(text: $query, prompt: "Function or section")
             .navigationTitle("Script Outline")
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
@@ -608,7 +608,7 @@ private struct ClarityOutlineView: View {
                         Image(systemName: "arrow.clockwise")
                     }
                 }
-            }
+            })
             .task {
                 await loadOutline()
             }
@@ -772,7 +772,7 @@ private struct ClaritySnippetShelf: View {
                 }
             }
             .navigationTitle("Snippet Shelf")
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
@@ -786,7 +786,7 @@ private struct ClaritySnippetShelf: View {
                         Image(systemName: "plus")
                     }
                 }
-            }
+            })
             .sheet(isPresented: $showsEditor) {
                 NavigationView {
                     Form {
@@ -799,7 +799,7 @@ private struct ClaritySnippetShelf: View {
                         }
                     }
                     .navigationTitle("New Snippet")
-                    .toolbar {
+                    .toolbar(content: {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cancel") { showsEditor = false }
                         }
@@ -818,7 +818,7 @@ private struct ClaritySnippetShelf: View {
                                 draftName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                                     || draftCode.isEmpty)
                         }
-                    }
+                    })
                 }
             }
         }
