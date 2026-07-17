@@ -22,8 +22,10 @@ jobs:
           git -C _xcode_source checkout 6493ba80ce29b7e9204fd17b1cc1357edc79cf05
           rsync -a overlay/ _xcode_source/
 
-      - name: Confirm Xcode 26
-        run: xcodebuild -version
+      - name: Select compatible Xcode 26
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
+          xcodebuild -version
 
       - name: Download runtime frameworks
         working-directory: _xcode_source
