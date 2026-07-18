@@ -5,7 +5,7 @@ on:
   push:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -69,3 +69,14 @@ jobs:
           name: XCode-IPA-Part-02
           path: _xcode_source/build/output/parts/XCode.ipa.part-02
           if-no-files-found: error
+
+      - name: Publish XCode IPA release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="xcode-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" \
+            "_xcode_source/build/output/XCode.ipa#XCode.ipa" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "XCode iPad build ${GITHUB_RUN_NUMBER}" \
+            --notes "Unsigned XCode IPA built from the pinned Code App source. Sign it with your own Apple certificate before installing."
