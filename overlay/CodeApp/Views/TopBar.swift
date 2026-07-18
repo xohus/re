@@ -435,7 +435,7 @@ private struct ClarityCodexSetupView: View {
             .navigationTitle("Codex on iPad")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
-                ToolbarItem(placement: .confirmationAction) {
+                SwiftUI.ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
                 }
             })
@@ -598,10 +598,10 @@ private struct ClarityOutlineView: View {
             .searchable(text: $query, prompt: "Function or section")
             .navigationTitle("Script Outline")
             .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
+                SwiftUI.ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
-                ToolbarItem(placement: .primaryAction) {
+                SwiftUI.ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task { await loadOutline() }
                     } label: {
@@ -773,10 +773,10 @@ private struct ClaritySnippetShelf: View {
             }
             .navigationTitle("Snippet Shelf")
             .toolbar(content: {
-                ToolbarItem(placement: .cancellationAction) {
+                SwiftUI.ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
-                ToolbarItem(placement: .primaryAction) {
+                SwiftUI.ToolbarItem(placement: .primaryAction) {
                     Button {
                         draftName = ""
                         draftLanguage = "Lua"
@@ -800,10 +800,10 @@ private struct ClaritySnippetShelf: View {
                     }
                     .navigationTitle("New Snippet")
                     .toolbar(content: {
-                        ToolbarItem(placement: .cancellationAction) {
+                        SwiftUI.ToolbarItem(placement: .cancellationAction) {
                             Button("Cancel") { showsEditor = false }
                         }
-                        ToolbarItem(placement: .confirmationAction) {
+                        SwiftUI.ToolbarItem(placement: .confirmationAction) {
                             Button("Save") {
                                 var snippets = storedSnippets.value
                                 snippets.append(
