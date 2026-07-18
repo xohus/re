@@ -42,9 +42,30 @@ jobs:
           unzip -t _xcode_source/build/output/XCode.ipa
           unzip -l _xcode_source/build/output/XCode.ipa | grep 'Payload/XCode.app/'
 
-      - name: Upload XCode IPA
+      - name: Split XCode IPA for download
+        run: |
+          mkdir -p _xcode_source/build/output/parts
+          split -b 140m -d -a 2 \
+            _xcode_source/build/output/XCode.ipa \
+            _xcode_source/build/output/parts/XCode.ipa.part-
+
+      - name: Upload XCode IPA part 00
         uses: actions/upload-artifact@v4
         with:
-          name: XCode-IPA
-          path: _xcode_source/build/output/XCode.ipa
+          name: XCode-IPA-Part-00
+          path: _xcode_source/build/output/parts/XCode.ipa.part-00
+          if-no-files-found: error
+
+      - name: Upload XCode IPA part 01
+        uses: actions/upload-artifact@v4
+        with:
+          name: XCode-IPA-Part-01
+          path: _xcode_source/build/output/parts/XCode.ipa.part-01
+          if-no-files-found: error
+
+      - name: Upload XCode IPA part 02
+        uses: actions/upload-artifact@v4
+        with:
+          name: XCode-IPA-Part-02
+          path: _xcode_source/build/output/parts/XCode.ipa.part-02
           if-no-files-found: error
